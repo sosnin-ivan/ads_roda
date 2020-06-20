@@ -1,7 +1,7 @@
 ENV['RACK-ENV'] ||= 'development'
 
 require 'bundler/setup'
-Bundler.require(:default, ENV['RACK-ENV'])
+Bundler.require(:default, ENV['RACK_ENV'])
 
 require_relative 'application_loader'
 ApplicationLoader.load_app!
