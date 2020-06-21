@@ -81,6 +81,7 @@ GEM
     rake (13.0.1)
     roda (3.33.0)
       rack
+    roda-symbolized_params (0.0.2)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -118,6 +119,7 @@ DEPENDENCIES
   rack-test (~> 1.1)
   rake (~> 13.0, >= 13.0.1)
   roda (~> 3.33)
+  roda-symbolized_params (~> 0.0.2)
   rspec (~> 3.9)
   sequel (~> 5.33)
 

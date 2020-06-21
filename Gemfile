@@ -8,6 +8,7 @@ gem 'rake', '~> 13.0', '>= 13.0.1'
 gem 'puma', '~> 4.3', '>= 4.3.5'
 
 gem 'roda', '~> 3.33'
+gem 'roda-symbolized_params', '~> 0.0.2'
 
 gem 'i18n', '~> 1.8', '>= 1.8.3'
 gem 'config', '~> 2.2', '>= 2.2.1'
