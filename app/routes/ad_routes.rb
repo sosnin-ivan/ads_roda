@@ -3,32 +3,30 @@ class AdRoutes < Application
   prepend Validations
   prepend ApiErrors
 
-  route do |r|
-    r.get do
-      page = params[:page].presence || 1
-      ads = Ad.reverse_order(:updated_at)
-      ads = ads.paginate(page.to_i, Settings.pagination.page_size)
-      serializer = AdSerializer.new(ads.all, links: pagination_links(ads))
+  get do
+    page = params[:page].presence || 1
+    ads = Ad.reverse_order(:updated_at)
+    ads = ads.paginate(page.to_i, Settings.pagination.page_size)
+    serializer = AdSerializer.new(ads.all, links: pagination_links(ads))
 
+    JSON serializer.serializable_hash
+  end
+
+  post do
+    ad_params = validate_with!(AdParamsContract)
+
+    result = Ads::CreateService.call(
+      ad: ad_params[:ad],
+      user_id: params[:user_id]
+    )
+
+    if result.success?
+      serializer = AdSerializer.new(result.ad)
+      response.status = 201
       JSON serializer.serializable_hash
-    end
-
-    r.post do
-      ad_params = validate_with!(AdParamsContract)
-
-      result = Ads::CreateService.call(
-        ad: ad_params[:ad],
-        user_id: params[:user_id]
-      )
-
-      if result.success?
-        serializer = AdSerializer.new(result.ad)
-        response.status = 201
-        JSON serializer.serializable_hash
-      else
-        response.status = 422
-        error_response result.ad
-      end
+    else
+      response.status = 422
+      error_response result.ad
     end
   end
 end
